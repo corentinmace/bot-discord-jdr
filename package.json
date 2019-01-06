@@ -1,0 +1,19 @@
+{
+  "name": "jdr-bot",
+  "version": "0.0.1",
+  "description": "discord-js JDR ",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "discord-js"
+  ],
+  "author": "Corentin Mace",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.4.2"
+  }
+}

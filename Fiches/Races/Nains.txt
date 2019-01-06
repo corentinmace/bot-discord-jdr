@@ -1,0 +1,8 @@
+Force : 5/10
+Constitution : 9/10
+Agilité : 7/10
+Intelligence : 5/10
+Intuition : 6/10
+Charisme : 5/10
+
+Moyenne : 6.16/10
