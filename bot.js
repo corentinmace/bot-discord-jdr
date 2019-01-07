@@ -9,6 +9,7 @@ const bot = new Discord.Client();
 
 bot.on('ready', () => {
   console.log(`Logged in as ${bot.user.tag}!`);
+   bot.user.setPresence({ game: { name: `Prefix : ${prefix} | ${prefix}help`, type: 0 } });
 });
 
 bot.on('message', message => {
@@ -25,7 +26,8 @@ bot.on('message', message => {
   .setColor(0xb4a734)
   .addField(`${prefix}help`, "Affiche la liste des commandes")
   .addField(`${prefix}races`, "Affiche les races disponibles")
-  .addField(`${prefix}classes`, "Affiche les classes disponibles");
+  .addField(`${prefix}classes`, "Affiche les classes disponibles")
+  .addField(`${prefix}carac`, "Affiche l'explication des caractéristique des races");
   message.channel.send({embed});;
 
 
@@ -33,7 +35,7 @@ bot.on('message', message => {
   if (message.content === prefix + 'races') {
     message.delete();
 
-    message.channel.send("Voici la liste des races disponibles :")
+    message.channel.send("**Voici la liste des races disponibles :**")
     let emb1 = new Discord.RichEmbed({})
 
     .setTitle("Elfes")
@@ -94,10 +96,10 @@ bot.on('message', message => {
     .addField("PV", "100")
     .addField("Force :", "10/10")
     .addField("Constitution :", "10/10")
-    .addField("Agilité :", "7/10")
+    .addField("Agilité :", "3/10")
     .addField("Intelligence :", "3/10")
-    .addField("Intuition :", "5/10")
-    .addField("Charisme :", "2/10");
+    .addField("Intuition :", "2/10")
+    .addField("Charisme :", "9/10");
 
   message.channel.send(emb1).then(msg => {message.channel.send(emb2);}).then(msg => {message.channel.send(emb3);}).then(msg => {message.channel.send(emb4);}).then(msg => {message.channel.send(emb5);});
 
@@ -106,7 +108,7 @@ bot.on('message', message => {
   if (message.content === prefix + 'classes') {
     message.delete();
 
-    message.channel.send("Voici la liste des classes disponibles :")
+    message.channel.send("**Voici la liste des classes disponibles :**")
     let emb6 = new Discord.RichEmbed({})
 
     .setTitle("Archer")
@@ -124,7 +126,7 @@ bot.on('message', message => {
     .setDescription("Le druide est un très bon herbologiste, il saura vous soigner quand il faudra")
     .addField("Mana :", "180")
     .addField("Armes :", "Faucille")
-    .addField("Pouvoir :", "Soin (30 Mana), Mana Booster(Seulement pour vos alliés)(Autant de point que vous booster)")
+    .addField("Pouvoir :", "Soin (30 Mana),Resurection(150 Mana) Mana Booster(Seulement pour vos alliés)(Autant de point que vous booster)")
 
     let emb8 = new Discord.RichEmbed({})
 
@@ -155,6 +157,23 @@ bot.on('message', message => {
 
   message.channel.send(emb6).then(msg => {message.channel.send(emb7);}).then(msg => {message.channel.send(emb8);}).then(msg => {message.channel.send(emb9);}).then(msg => {message.channel.send(emb10);});
 
+  }
+
+  if (message.content === prefix + "carac") {
+    message.delete();
+
+    let emb11 = new Discord.RichEmbed({})
+
+    .setTitle("Explication des caratéristiques des personnages")
+    .setColor(0x066487)
+    .addField("PV", "Ce sont les points de vie du personnages. Si ils tombent à 0, le personnage meurt")
+    .addField("Force :", "Il s’agit là de votre force physique, votre puissance musculaire. Plus simplement, elle représente votre capacité à déplacer des lourdes charges, à supporter votre attirail lors des expéditions, à frapper fort… Elle est la caractéristique principale des guerriers. La force sert donc à déterminer l'encombrement maximum que peut transporter votre personnage, les dégâts infligés à votre adversaire quand vous le touchez etc.")
+    .addField("Constitution :", "Elle traduit la masse musculaire du personnage et sa résistance physique. C’est donc elle qui reflète votre capacité à encaisser les coups ou à résister à d’éprouvantes conditions physiques. Au-delà de la résistance aux coups physiques, elle détermine également la résistance aux maladies, infections, poisons… C’est cette caractéristique qui est utilisée avec celle de la force pour le calcul des points de vie.")
+    .addField("Agilité :", "C'est la vivacité du personnage, ses réflexes, sa coordination, sa dextérité. L’agilité définit l'habileté du personnage, son aptitude à tirer et à toucher, à manipuler les objets ou à chevaucher une créature. Elle influe également sur la vitesse de réaction. Elle représente votre facilité à mouvoir rapidement et de façon précise votre corps. L’agilité est donc fort utile pour le vol mais aussi l'utilisation de certaines armes qui requièrent rapidité et précision. Elle est donc tout aussi importante chez le Chevalier que chez le voleur.")
+    .addField("Intelligence :", "L'intelligence est le reflet du potentiel intellectuel et du savoir du personnage : ses connaissances et sa capacité à les utiliser en toute circonstance. Elle définit la mémoire du personnage et lui sert à imaginer des plans, échafauder des théories à partir des éléments recueillis ou de posséder des acquis culturels importants. L’intelligence est primordiale chez les lanceurs de sorts car c’est grâce à son intelligence que le personnage pourra comprendre et mémoriser des sorts.")
+    .addField("Intuition :", "Elle représente à la fois perception des choses et les pressentiments. Elle détermine la capacité à sentir les pièges ou à faire les bons choix. L’intuition résume à elle seule la sensibilité des cinq sens du personnage (vue, ouïe, toucher, odorat et goût) et sa capacité à interpréter ce qu'il détecte. Une bonne Perception est utile pour le combat à distance et permet de se sentir à l'aise n'importe où.")
+    .addField("Charisme :", "Le charisme détermine la capacité d'un personnage à faire peur ou charmer un animal ou un individu, représente la prestance. Il représente le fait que vous impressionnez ou non les gens que vous croisez. Attention, le charisme n'est pas forcément positif. Il peut représenter la beauté chez une jeune danseuse, l’éloquence chez un diplomate, mais également la peur que fait ressentir un tyran.");
+    message.channel.send(emb11)
   }
 
 });
