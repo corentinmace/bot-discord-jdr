@@ -6,7 +6,7 @@ botToken = config.botToken
 
 const bot = new Discord.Client();
 const version = "ALPHA v0.0.4"
-ssvdvdvd
+
 function presence(num, bot){
 switch (num) {
   case 0:
