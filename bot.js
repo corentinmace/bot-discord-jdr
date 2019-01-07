@@ -6,7 +6,7 @@ botToken = config.botToken
 
 const bot = new Discord.Client();
 const version = "ALPHA v0.0.4"
-
+ssvdvdvd
 function presence(num, bot){
 switch (num) {
   case 0:
@@ -64,6 +64,17 @@ bot.on('message', message => {
     prefix = args[0];
     message.channel.send(`Le prefix sélectionné est ${prefix}`);
   }
+   if (message.member.hasPermission('BAN_MEMBERS') && message.content.startsWith(prefix + "server-name")) {
+      const args = message.content.slice(prefix.length).split(' ');
+    message.guild.setName(args[1]);
+    console.log(args);
+
+    message.channel.send(`Le nom du serveur à été changé pour ${message.guild.name}`);
+    }
+    else if (!message.member.hasPermission('BAN_MEMBERS') && message.content.startsWith(prefix + "server-name")){
+    message.channel.send("Vous n'avez pas la permission de changer le nom du serveur !")
+  }
+
 
   if(message.content === prefix + "server-info"){
     message.delete();
@@ -112,6 +123,7 @@ bot.on('message', message => {
   .addField(`${prefix}server-info`, "Donne les informations sur le serveur")
   .addField(`${prefix}bot-info`, "Affiche les informations du bot")
   .addField(`${prefix}prefix`, "Permet de changer le prefix du serveur")
+  .addField(`${prefix}server-name`, "Permet de changer de nom du serveur")
   .setFooter(`Demandé par ${message.author.username}`, message.author.avatarURL);
   message.channel.send({embed});;
 
