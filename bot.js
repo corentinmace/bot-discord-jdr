@@ -1,16 +1,53 @@
 config = require('./config.json');
 const Discord = require('discord.js');
-prefix = config.prefix;
+let prefix = config.prefix;
 servToken = config.servToken;
 botToken = config.botToken
 
 const bot = new Discord.Client();
+const version = "ALPHA v0.0.4"
 
+function presence(num, bot){
+switch (num) {
+  case 0:
+    bot.user.setPresence({ game: { name: `Prefix : ${prefix} | ${prefix}help`, type: 0 } });
+    break;
+  case 1:
+    bot.user.setPresence({ game: { name: version, type: 0 } });
+    break
+  case 2:
+    bot.user.setPresence({ game: { name: `${bot.guilds.get(servToken).memberCount} joueur !`, type: 0 } });
+    break
+  }
+}
+
+function compteurPresence(num){
+  switch (num) {
+    case 0:
+      return 1
+      break;
+    case 1:
+      return 2;
+      break;
+    case 2:
+      return 0;
+      break;
+  }
+}
 
 bot.on('ready', () => {
   console.log(`Logged in as ${bot.user.tag}!`);
-   bot.user.setPresence({ game: { name: `Prefix : ${prefix} | ${prefix}help`, type: 0 } });
+
+  let compteur = 1;
+
+setInterval(function(){
+  compteur = compteurPresence(compteur);
+  presence(compteur, bot);
+}, );
+
+
 });
+
 
 bot.on('message', message => {
 
@@ -20,14 +57,62 @@ bot.on('message', message => {
     message.channel.send(`Si tu as besoin d'aide : ${prefix}help`)
   }
 
+  if (message.content.startsWith(prefix + "prefix")) {
+    const args = message.content.slice(prefix.length).split(' ');
+    const command = args.shift().toLowerCase();
+    console.log(args)
+    prefix = args[0];
+    message.channel.send(`Le prefix sélectionné est ${prefix}`);
+  }
+
+  if(message.content === prefix + "server-info"){
+    message.delete();
+
+  let serverembed = new Discord.RichEmbed()
+  .setDescription("**Informations du serveur**")
+  .setColor(0xb4a734)
+  .addField("Nom du serveur :", message.guild.name, true)
+  .addField("Owner :", message.guild.owner, true)
+  .addField("Rejoins le", message.member.joinedAt)
+  .addField("Crée le", message.guild.createdAt)
+  .addField("Nombres de membres", message.guild.memberCount, true)
+  .addField("Acronyme :", message.guild.nameAcronym, true)
+  .addField("Region :", message.guild.region, true)
+  .setFooter(`Demandé par ${message.author.username}`, message.author.avatarURL);
+  return message.channel.send(serverembed);
+  }
+
+  if(message.content === prefix + "bot-info"){
+  message.delete();
+
+  let serverembed = new Discord.RichEmbed()
+  .setDescription("**Informations du bot**")
+  .setColor(0xb4a734)
+  .addField("Nom du Bot", bot.user.tag, true)
+  .addField("Version", version, true)
+  .addField("Prefix", prefix, true)
+  .addField("Createur", "@Corentin `Kūhaku` Macé#1986", true)
+  .addField(`Support du bot`, `[Discord](https://discord.gg/G6DDRy)`, true)
+  .setFooter(`Demandé par ${message.author.username}`, message.author.avatarURL);
+
+
+  return message.channel.send(serverembed);
+  }
+
+
   if (message.content === prefix +  "help") {
+    message.delete();
   const embed = new Discord.RichEmbed()
     .setTitle("Liste des commandes :")
   .setColor(0xb4a734)
   .addField(`${prefix}help`, "Affiche la liste des commandes")
   .addField(`${prefix}races`, "Affiche les races disponibles")
   .addField(`${prefix}classes`, "Affiche les classes disponibles")
-  .addField(`${prefix}carac`, "Affiche l'explication des caractéristique des races");
+  .addField(`${prefix}carac`, "Affiche l'explication des caractéristique des races")
+  .addField(`${prefix}server-info`, "Donne les informations sur le serveur")
+  .addField(`${prefix}bot-info`, "Affiche les informations du bot")
+  .addField(`${prefix}prefix`, "Permet de changer le prefix du serveur")
+  .setFooter(`Demandé par ${message.author.username}`, message.author.avatarURL);
   message.channel.send({embed});;
 
 
