@@ -16,8 +16,20 @@ bot.on('message', message => {
   if (message.content === '<@531552938171301888>') {
 
     message.channel.send(`Mon prefix est : ${prefix}`);
+    message.channel.send(`Si tu as besoin d'aide : ${prefix}help`)
   }
 
+  if (message.content === prefix +  "help") {
+  const embed = new Discord.RichEmbed()
+    .setTitle("Liste des commandes :")
+  .setColor(0xb4a734)
+  .addField(`${prefix}help`, "Affiche la liste des commandes")
+  .addField(`${prefix}races`, "Affiche les races disponibles")
+  .addField(`${prefix}classes`, "Affiche les classes disponibles");
+  message.channel.send({embed});;
+
+
+  }
   if (message.content === prefix + 'races') {
     message.delete();
 
