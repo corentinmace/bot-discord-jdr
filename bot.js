@@ -64,6 +64,17 @@ bot.on('message', message => {
     prefix = args[0];
     message.channel.send(`Le prefix sélectionné est ${prefix}`);
   }
+   if (message.member.hasPermission('BAN_MEMBERS') && message.content.startsWith(prefix + "server-name")) {
+      const args = message.content.slice(prefix.length).split(' ');
+    message.guild.setName(args[1]);
+    console.log(args);
+
+    message.channel.send(`Le nom du serveur à été changé pour ${message.guild.name}`);
+    }
+    else if (!message.member.hasPermission('BAN_MEMBERS') && message.content.startsWith(prefix + "server-name")){
+    message.channel.send("Vous n'avez pas la permission de changer le nom du serveur !")
+  }
+
 
   if(message.content === prefix + "server-info"){
     message.delete();
