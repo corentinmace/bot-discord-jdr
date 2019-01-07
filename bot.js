@@ -43,7 +43,7 @@ bot.on('ready', () => {
 setInterval(function(){
   compteur = compteurPresence(compteur);
   presence(compteur, bot);
-}, );
+}, 5000 );
 
 
 });
@@ -64,15 +64,18 @@ bot.on('message', message => {
     prefix = args[0];
     message.channel.send(`Le prefix sélectionné est ${prefix}`);
   }
+
    if (message.member.hasPermission('BAN_MEMBERS') && message.content.startsWith(prefix + "server-name")) {
       const args = message.content.slice(prefix.length).split(' ');
-    message.guild.setName(args[1]);
-    console.log(args);
+      args.shift(args[0])
+    message.guild.setName(args.join(' '));
+    console.log(args.join(' '));
+    setTimeout(function(){ message.channel.send(`Le nom du serveur à été changé pour **${message.guild.name}**`);
+  }, 1500);
 
-    message.channel.send(`Le nom du serveur à été changé pour ${message.guild.name}`);
     }
     else if (!message.member.hasPermission('BAN_MEMBERS') && message.content.startsWith(prefix + "server-name")){
-    message.channel.send("Vous n'avez pas la permission de changer le nom du serveur !")
+    message.channel.send("Vous n'avez pas la permission de changer le nom du serveur !");
   }
 
 
@@ -99,11 +102,13 @@ bot.on('message', message => {
   let serverembed = new Discord.RichEmbed()
   .setDescription("**Informations du bot**")
   .setColor(0xb4a734)
+
   .addField("Nom du Bot", bot.user.tag, true)
   .addField("Version", version, true)
   .addField("Prefix", prefix, true)
   .addField("Createur", "@Corentin `Kūhaku` Macé#1986", true)
   .addField(`Support du bot`, `[Discord](https://discord.gg/G6DDRy)`, true)
+    .setDescription("Discord-JDR est un BOT Game Master d'un JDR. Il est encore en developpement mais à terme, il sera capable d'orchestrer un JDR de A à Z")
   .setFooter(`Demandé par ${message.author.username}`, message.author.avatarURL);
 
 
