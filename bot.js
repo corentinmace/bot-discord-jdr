@@ -10,40 +10,6 @@ const version = "ALPHA v0.0.5"; // Creation d'une variable de la version du bot
 
 
 
-
-function presence(num, bot){ // Fonction du jeu du bot
-switch (num) {
-  case 0:
-    bot.user.setPresence({ game: { name: `Prefix : ${prefix} | ${prefix}help`, type: 0 } });
-    break;
-  case 1:
-    bot.user.setPresence({ game: { name: version, type: 0 } });
-    break
-  case 2:
-    bot.user.setPresence({ game: { name: `${bot.guilds.get(servToken).memberCount} joueur !`, type: 0 } });
-    break
-  case 3:
-    bot.user.setPresence({ game : { name: `Actuellement sur ${bot.guilds.size} serveurs !`}});
-  }
-}
-
-function compteurPresence(num){ // Compteur pour changer le jeu du bot
-  switch (num) {
-    case 0:
-      return 1
-      break;
-    case 1:
-      return 2;
-      break;
-    case 2:
-      return 3;
-      break;
-    case 3:
-      return 0;
-      break;
-  }
-}
-
 bot.on('ready', () => {
   console.log(`Logged in as ${bot.user.tag}!`);
 
@@ -53,6 +19,8 @@ setInterval(function(){
   compteur = compteurPresence(compteur);
   presence(compteur, bot);
 }, 5000 ); // Change le jeu du bot toute les 5s
+
+
 
 
 });
@@ -289,7 +257,79 @@ bot.on('message', message => {
     message.channel.send(carac) // Envoi de l'embed
   }
 
+
 });
+
+
+function presence(num, bot){ // Fonction du jeu du bot
+switch (num) {
+  case 0:
+    bot.user.setPresence({ game: { name: `Prefix : ${prefix} | ${prefix}help`, type: 0 } });
+    break;
+  case 1:
+    bot.user.setPresence({ game: { name: version, type: 0 } });
+    break
+  case 2:
+    bot.user.setPresence({ game: { name: `6 joueur !`, type: 0 } });
+    break
+  case 3:
+    bot.user.setPresence({ game : { name: `Actuellement sur ${bot.guilds.size} serveurs !`}});
+  }
+}
+
+function compteurPresence(num){ // Compteur pour changer le jeu du bot
+  switch (num) {
+    case 0:
+      return 1
+      break;
+    case 1:
+      return 2;
+      break;
+    case 2:
+      return 3;
+      break;
+    case 3:
+      return 0;
+      break;
+  }
+}
+
+bot.on("guildCreate", guild => {
+
+if (!guild.channels.find(ch => ch.name === 'bot-logs')) {
+  console.log("Le channel existe pas");
+  CreateLogsChannel();
+  SendUpdateEmbed();
+}
+else {
+  console.log("Le channel existe")
+  SendUpdateEmbed();
+}
+
+function SendUpdateEmbed() {
+
+let UpdateEm = new Discord.RichEmbed({})
+  .setTitle(`Change log ${version}`)
+  .setDescription("Update on something");
+
+setTimeout(function(){
+    botchannel = guild.channels.find(ch => ch.name === 'bot-logs');
+   botchannel.send(UpdateEm);
+}, 1500);
+
+}
+
+function CreateLogsChannel() {
+
+guild.createChannel('bot-logs', 'text')
+.then(console.log)
+.catch(console.error);
+
+}
+
+});
+// Fonctions
+
 
 
 bot.login(botToken);
