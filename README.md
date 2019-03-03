@@ -5,12 +5,22 @@
 
 ## Checklist :
 ✅ **Commande Help**
+
 ✅ **Commande d'affichage des races**
+
 ✅ **Commande d'affichage des classes**
+
 ✅ **Commande d'explication des caractéristiques**
 
+
 ❎ **Commande de debut de partie**
+
 ❎ **Commande de reset de partie**
+
 ❎ **Commande de fin de partie**
+
 ❎ **Commande de lancé de dés**
+
 ❎ **Commande de choix de classe et de race**
+
+
